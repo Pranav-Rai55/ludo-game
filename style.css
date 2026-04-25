@@ -1,0 +1,356 @@
+/* =====================
+   LUDO GAME — style.css
+   ===================== */
+
+:root {
+  --red: #E63946;
+  --green: #2DC653;
+  --blue: #3A86FF;
+  --yellow: #FFD60A;
+  --bg: #0f0e17;
+  --surface: #1a1828;
+  --border: #2d2b45;
+  --text: #fffffe;
+  --text-muted: #a7a5c5;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-image:
+    radial-gradient(ellipse at 20% 20%, rgba(58,134,255,0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(230,57,70,0.08) 0%, transparent 50%);
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 800;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  background: linear-gradient(135deg, var(--red), var(--blue), var(--green), var(--yellow));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 6px;
+}
+
+.subtitle {
+  font-family: 'Space Mono', monospace;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 24px;
+}
+
+/* ===== LAYOUT ===== */
+.game-wrapper {
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.board-container {
+  position: relative;
+}
+
+canvas#board {
+  border-radius: 16px;
+  box-shadow: 0 0 60px rgba(0,0,0,0.6), 0 0 0 2px var(--border);
+  display: block;
+  cursor: pointer;
+}
+
+/* ===== SIDE PANEL ===== */
+.panel {
+  width: 240px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ===== PLAYER CARDS ===== */
+#playerCards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.player-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px 14px;
+  transition: all 0.3s;
+}
+
+.player-card.active {
+  border-color: var(--accent-color);
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+.player-card-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+.player-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.player-name {
+  font-weight: 700;
+  font-size: 0.85rem;
+  letter-spacing: 0.05em;
+}
+
+.player-status {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.tokens-display {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.token-pip {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid rgba(255,255,255,0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.55rem;
+  font-weight: 700;
+  color: #fff;
+  font-family: 'Space Mono', monospace;
+}
+
+.token-pip.home     { opacity: 0.4; }
+.token-pip.finished { border-color: gold; box-shadow: 0 0 6px gold; }
+
+/* ===== STATUS BAR ===== */
+.status-bar {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 16px;
+  font-family: 'Space Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  text-align: center;
+  min-height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.status-bar .highlight {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* ===== DICE ===== */
+.dice-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+}
+
+.dice-label {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  letter-spacing: 0.15em;
+  margin-bottom: 12px;
+}
+
+.dice {
+  width: 72px;
+  height: 72px;
+  background: #fff;
+  border-radius: 14px;
+  margin: 0 auto 16px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  padding: 8px;
+  gap: 2px;
+  cursor: pointer;
+  transition: transform 0.1s, box-shadow 0.2s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+.dice:hover  { transform: scale(1.06); }
+.dice:active { transform: scale(0.94); }
+
+.dice.rolling {
+  animation: rollDice 0.45s ease;
+}
+
+@keyframes rollDice {
+  0%   { transform: rotate(0deg)   scale(1);    }
+  25%  { transform: rotate(16deg)  scale(0.88); }
+  50%  { transform: rotate(-14deg) scale(1.12); }
+  75%  { transform: rotate(10deg)  scale(0.94); }
+  100% { transform: rotate(0deg)   scale(1);    }
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #1a1a2e;
+  margin: auto;
+}
+
+.dot.hidden { background: transparent; }
+
+/* ===== BUTTONS ===== */
+.btn-roll {
+  width: 100%;
+  padding: 11px;
+  background: linear-gradient(135deg, var(--blue), #5e60ce);
+  border: none;
+  border-radius: 10px;
+  color: white;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.88rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.btn-roll:hover    { filter: brightness(1.15); transform: translateY(-1px); }
+.btn-roll:active   { transform: translateY(0);  }
+.btn-roll:disabled { opacity: 0.4; cursor: not-allowed; transform: none; filter: none; }
+
+.btn-new {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text-muted);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  letter-spacing: 0.1em;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+}
+
+.btn-new:hover { border-color: var(--text-muted); color: var(--text); }
+
+/* ===== GAME LOG ===== */
+.log-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 14px;
+  max-height: 190px;
+  overflow-y: auto;
+}
+
+.log-title {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.log-entry {
+  font-family: 'Space Mono', monospace;
+  font-size: 0.68rem;
+  color: var(--text-muted);
+  padding: 4px 0;
+  border-bottom: 1px solid var(--border);
+  line-height: 1.5;
+}
+
+.log-entry:last-child { border-bottom: none; }
+.log-entry .hl        { font-weight: 700; }
+
+/* ===== WINNER OVERLAY ===== */
+.winner-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.88);
+  z-index: 200;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.winner-overlay.show { display: flex; }
+
+.winner-box {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 48px 52px;
+  text-align: center;
+  animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes popIn {
+  from { transform: scale(0.5); opacity: 0; }
+  to   { transform: scale(1);   opacity: 1; }
+}
+
+.winner-emoji { font-size: 4rem; margin-bottom: 10px; }
+.winner-title { font-size: 2.2rem; font-weight: 800; letter-spacing: 0.1em; }
+.winner-sub   {
+  color: var(--text-muted);
+  font-family: 'Space Mono', monospace;
+  font-size: 0.82rem;
+  margin: 10px 0 24px;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 680px) {
+  h1 { font-size: 2rem; }
+
+  .panel {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+
+  #playerCards       { flex: 100%; flex-direction: row; }
+  .player-card       { flex: 1; min-width: 110px; }
+  .dice-section      { flex: 1; min-width: 140px; }
+  .log-section       { flex: 1; min-width: 140px; }
+  .status-bar,
+  .btn-new           { flex: 100%; }
+}

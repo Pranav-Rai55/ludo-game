@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>LUDO — Classic Board Game</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <h1>LUDO</h1>
+  <p class="subtitle">CLASSIC BOARD GAME · 4 PLAYERS</p>
+
+  <div class="game-wrapper">
+    <div class="board-container">
+      <canvas id="board"></canvas>
+    </div>
+
+    <div class="panel">
+      <div id="playerCards"></div>
+
+      <div class="status-bar" id="statusBar">Roll the dice to start!</div>
+
+      <div class="dice-section">
+        <div class="dice-label">DICE</div>
+        <div class="dice" id="dice" onclick="rollDice()"></div>
+        <button class="btn-roll" id="btnRoll" onclick="rollDice()">🎲 Roll Dice</button>
+      </div>
+
+      <div class="log-section">
+        <div class="log-title">GAME LOG</div>
+        <div id="gameLog"></div>
+      </div>
+
+      <button class="btn-new" onclick="newGame()">↺ New Game</button>
+    </div>
+  </div>
+
+  <div class="winner-overlay" id="winnerOverlay">
+    <div class="winner-box">
+      <div class="winner-emoji">🏆</div>
+      <div class="winner-title" id="winnerTitle">RED WINS!</div>
+      <div class="winner-sub" id="winnerSub">Congratulations!</div>
+      <button class="btn-roll" onclick="newGame()" style="max-width:200px;margin:auto;display:block">Play Again</button>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
